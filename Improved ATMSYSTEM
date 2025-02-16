@@ -1,1 +1,116 @@
 
+import java.util.Scanner;
+import java.util.HashMap;
+
+public class Main
+{
+    public static void main(String[] args) {
+        
+        
+        HashMap<Integer, Integer> NewAcc = new HashMap<>();
+        HashMap<Integer, Double> NewBal = new HashMap<>(); 
+        Scanner input = new Scanner(System.in);
+        
+        System.out.println("Welcome to the ATM");
+       
+        boolean Open = true;
+        
+        while (Open) {
+             System.out.println("\nPlease choose your options");
+             System.out.println("1. Register");
+             System.out.println("2. Log In");
+             System.out.println("3. Exit");
+             int choice = input.nextInt();
+             
+             switch (choice){
+                 case 1:
+                     System.out.print("Enter Account Number: ");
+                     int NA = input.nextInt();
+                     
+                      if ( NewAcc.containsKey(NA)){
+                         System.out.print("Your Account Number is already Registered. Please use different one. ");
+                         break;
+                     } 
+                     
+                     System.out.print("Enter Pin: ");
+                     int NP = input.nextInt();
+                     
+                     
+                     NewAcc.put(NA, NP);
+                     NewBal.put(NA, 0.0);
+                     
+                     System.out.println("Account successfully registered!");
+                     
+                     break;
+                     
+                 case 2:
+                     System.out.print("Enter Account Number: ");
+                     int Acc = input.nextInt();
+                     System.out.print("Enter Pin: ");
+                     int Pin = input.nextInt();
+                     
+                     if ( NewAcc.containsKey(Acc) && NewAcc.get(Acc) == Pin){
+                         System.out.print("Log in Successful!");
+                         
+                         boolean login = true;
+                         
+                           while (login) {
+                                System.out.println("\nATM MENU:");
+                                 System.out.println("1. Check Balance");
+                                 System.out.println("2. Deposit Money");
+                                 System.out.println("3. Withdraw Money");
+                                 System.out.println("4. Log Out");
+                                 System.out.println("Choose an option:");
+                                 int x = input.nextInt();
+                                 
+                                 switch (x){
+                                   case 1:
+                                      System.out.println("Your Balance: $" +NewBal.get(Acc));
+                                      break;
+                                   case 2:
+                                      System.out.println("Enter deposit amount:" ); 
+                                        double dep = input.nextDouble();
+                                        NewBal.put(Acc, NewBal.get(Acc) + dep);
+                                        System.out.println("Deposit successful. New balance: $" +NewBal.get(Acc));
+                                        break;
+                                        
+                                   case 3:
+                                      System.out.println("Enter withdrawal amount:" ); 
+                                      int with = input.nextInt();
+                                        if (with > NewBal.get(Acc)){
+                                           System.out.println("Cannot Withdraw more than your Balance.Please Try Again.");
+                                        } else {
+                                            NewBal.put(Acc, NewBal.get(Acc) - with);
+                                            System.out.println("Deposit successful. New balance: $" +NewBal.get(Acc));
+                                         }
+                                         break;
+                                   case 4:   
+                                      System.out.println("You Log Out Successfully" );
+                                        login = false;
+                                        break;
+                                       default:
+                                          System.out.println("Invalid please choose 1-4 option" );
+                                          
+                                 }
+                           }
+                     } else {
+                        System.out.println("Invalid account number or PIN. Please try again.");
+                    }
+                    break;
+                 case 3:
+                     System.out.println("Thank you for using the ATM. Goodbye!" ); 
+                    Open = false;
+                    break;
+                 default:
+                 System.out.println("Invalid option Please choose 1,2 or 3" ); 
+                    
+                 }
+         
+        }        
+        
+        
+    }
+}
+
+
+
